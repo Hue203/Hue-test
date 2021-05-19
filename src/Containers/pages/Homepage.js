@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Table, Button, Col, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { leadActions } from "redux/actions/lead.actions";
-import ModalTabel from "../../Componnets/Modal";
+import ModalTabel from "../../Componnets/AddModal";
 
 const Homepage = () => {
   const [selectedAddLead, setSelectedAddLead] = useState(null);

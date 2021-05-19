@@ -3,15 +3,15 @@ import { Modal, Col, Row, Form, Button } from "react-bootstrap";
 import { leadActions } from "../redux/actions/lead.actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const ModalTabel = (showModal, setShowModal, setShow) => {
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const ModalTabel = ({ showModal, setShowModal }) => {
+  const handleClose = () => setShowModal(false);
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     mobile: "",
-    location_type: "",
+    location_type: "City",
     location_string: "",
   });
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const {
@@ -39,23 +40,24 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
         location_string
       )
     );
+    handleClose();
   };
 
   return (
     <div>
-      <Modal show={showModal} setShow={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add Lead</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
+      <Modal show={showModal} onHide={handleClose}>
+        <Form onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Lead</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <Row>
               <Col>
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   required
                   type="text"
-                  placeholder="First Name"
+                  name="first_name"
                   value={formData.first_name}
                   onChange={handleChange}
                 />
@@ -65,7 +67,7 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
                 <Form.Control
                   required
                   type="text"
-                  placeholder="Last Name"
+                  name="last_name"
                   value={formData.last_name}
                   onChange={handleChange}
                 />
@@ -77,7 +79,7 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
                 <Form.Control
                   required
                   type="email"
-                  placeholder="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
                 />
@@ -86,8 +88,8 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
                 <Form.Label>Mobile</Form.Label>
                 <Form.Control
                   required
-                  type="number"
-                  placeholder="mobile number"
+                  type="mobile"
+                  name="mobile"
                   value={formData.mobile}
                   onChange={handleChange}
                 />
@@ -112,21 +114,22 @@ const ModalTabel = (showModal, setShowModal, setShow) => {
                 <Form.Control
                   required
                   type="text"
-                  placeholder=""
+                  name="location_string"
                   value={formData.location_string}
+                  onChange={handleChange}
                 />
               </Col>
             </Row>
-          </Form>
-        </Modal.Body>
-        {/* <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save
-          </Button>
-        </Modal.Footer> */}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="danger" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Save
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
     </div>
   );
