@@ -15,7 +15,7 @@ const Homepage = () => {
   const handleOnclick = () => {
     setShowModal(true);
   };
-
+  console.log("Click", handleOnclick);
   useEffect(() => {
     dispatch(leadActions.leadsRequest());
   }, []);
@@ -25,7 +25,7 @@ const Homepage = () => {
   return (
     <>
       <Button onClick={handleOnclick}> ADD LEAD </Button>
-      <ModalTabel />
+      <ModalTabel showModal={showModal} setShowModal={setShowModal} />
       <Container fluid>
         <Row>
           <Table striped bordered hover>

@@ -3,9 +3,7 @@ import { Modal, Col, Row, Form, Button } from "react-bootstrap";
 import { leadActions } from "../redux/actions/lead.actions";
 import { useSelector, useDispatch } from "react-redux";
 
-const ModalTabel = () => {
-  const [show, setShow] = useState(false);
-
+const ModalTabel = (showModal, setShowModal, setShow) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [formData, setFormData] = useState({
@@ -17,6 +15,10 @@ const ModalTabel = () => {
     location_string: "",
   });
   const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const {
@@ -39,13 +41,9 @@ const ModalTabel = () => {
     );
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   return (
     <div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showModal} setShow={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Add Lead</Modal.Title>
         </Modal.Header>
@@ -121,14 +119,14 @@ const ModalTabel = () => {
             </Row>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="danger" onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handleClose}>
             Save
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
     </div>
   );
